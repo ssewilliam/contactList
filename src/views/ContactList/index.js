@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import contactData from '../../api'
+import { getContact } from '../../redux/actions/contactActions'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,12 +20,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AlignItemsList() {
+export default function ContactList() {
   const classes = useStyles();
-  const { data } = contactData;
+  const dispatch = useDispatch()
+  const users = useSelector(state=>state.contactDetails).data
+
+  useEffect(()=>{
+    dispatch(getContact())
+  },[dispatch])
+
   return (
     <List className={classes.root}>
-      {data.map(user=>(
+      {users.length && users.map(user=>(
         <React.Fragment key={user.id}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>

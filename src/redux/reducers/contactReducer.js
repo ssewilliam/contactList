@@ -7,7 +7,7 @@ import {
 
 export const initialState = {
   isLoading: false,
-  contactData: [],
+  data: [],
   error: {}
 };
 
@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
     case FETCH_CONTACT_SUCCESS:
       return {
         ...state,
-        contactData: action.payload,
+        ...action.payload,
         isLoading: false
       };
 
